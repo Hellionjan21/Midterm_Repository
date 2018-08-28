@@ -385,7 +385,7 @@ cat("Month=9: ",val5,"\n")
 #local
 install.packages("imager")
 library(imager)
-image<- load.image("C:/Users/RM A-225/cw.jpg")
+image<- load.image("C:\Users\RM A-225\dota2.jpg")
 plot(image)
 width(image)
 height(image)
@@ -412,8 +412,9 @@ imageresize("C:/Users/RM A-225/cw.jpg",50,50)
 ############################################################
 #web
 install.packages("magick")
-library("ReadImages")
-myurl<-"https://upload.wikimedia.org/wikipedia/en/a/aa/Outlast_cover.jpg"
+library(ReadImages)
+library(jpeg)
+myurl<-"https://upload.wikimedia.org/wikipedia/en/8/8d/Dark_Souls_Cover_Art.jpg"
 z<-tempfile()
 download.file(myurl,z,mode="wb")
 pic<- readJPEG(z)
@@ -431,3 +432,78 @@ readimage<- function(url)
   rasterImage(pic,0,0,1,1)
 }
 readimage("https://upload.wikimedia.org/wikipedia/en/a/aa/Outlast_cover.jpg")
+
+#############################################################################
+#############################################################################
+#WEB
+install.packages("magick")
+library(imager)
+library(magick)
+webimage<-function(source){
+  image_read(source)
+}
+z<-webimage("https://upload.wikimedia.org/wikipedia/en/3/34/Fallout_New_Vegas.jpg")
+grayscale(z,method="Luma",drop=TRUE)
+#LOCALLY
+##LOADING IMAGE
+library(imager)
+imageview<- function(imagelocation)
+{
+  pic<-load.image(imagelocation)
+  plot(pic)
+}
+imageview("C:/Users/RM A-225/dota2.jpg")
+
+##RESIZE
+imageresize<- function(imagelocation,width,height,filename)
+{
+  load<-load.image(imagelocation)
+  image1<-resize(load,width,height)
+  plot(image1)
+  x<-"C:/Users/RM A-225/augmented-images/"
+  y<-paste(x,filename)
+  save.image(image1,y)
+}
+imageresize("C:/Users/RM A-225/dota2.jpg",300,300,"imgresize.jpg")
+
+##GRAYSCALE
+imageview1<- function(imagelocation,grayscale=FALSE,filename)
+{
+  pic<-load.image(imagelocation)
+  if(grayscale==TRUE)
+  {
+  gs<-grayscale(pic)
+  plot(gs)
+  x<-"C:/Users/RM A-225/augmented-images/"
+  y<-paste(x,filename)
+  save.image(gs,y)
+  }
+  else
+  {
+  plot(pic)
+  x<-"C:/Users/RM A-225/augmented-images/"
+  y<-paste(x,filename)
+  save.image(pic,y)
+  }
+}
+imageview1("C:/Users/RM A-225/dota2.jpg",TRUE,"grayscale.jpg")
+imageview1("C:/Users/RM A-225/dota2.jpg",,"grayscale(FALSE).jpg")
+
+
+##ROTATE
+
+library(imager)
+library(jpeg)
+imgrotate<- function(imagelocation,rotate,filename)
+{
+  pic<-load.image(imagelocation)
+  rot<-imrotate(pic,rotate)
+  plot(rot)
+  x<-"C:/Users/RM A-225/augmented-images/"
+  y<-paste(x,filename)
+  save.image(rot,y)
+}
+imgrotate("C:/Users/RM A-225/dota2.jpg",30,"rotate.jpg")
+
+
+
